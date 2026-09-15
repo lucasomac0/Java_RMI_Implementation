@@ -1,9 +1,8 @@
-package comum;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Turma {
+public class Turma implements Serializable{
     private String codigo;
     private List<Aluno> alunos; 
 

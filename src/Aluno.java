@@ -1,6 +1,6 @@
-package comum;
+import java.io.Serializable;
 
-public class Aluno {
+public class Aluno implements Serializable{
     private String nome;
     private String email;
     private String matricula;
