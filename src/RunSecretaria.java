@@ -1,7 +1,9 @@
+package sca;
+
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
-// java -cp bin RunSecretaria 192.168.0.10 192.168.0.15
+// java -cp bin sigaa.RunSecretaria 192.168.0.10 192.168.0.15
 
 public class RunSecretaria {
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package sca;
+
 import java.io.Serializable;
 
 public class Aluno implements Serializable{

@@ -1,6 +1,8 @@
+package sca;
+
 import java.rmi.Naming;
 
-// java -cp bin ClienteMain 192.168.0.20
+// java -cp bin sigaa.ClienteMain 192.168.0.20
 
 public class ClienteMain {
     public static void main(String[] args) {

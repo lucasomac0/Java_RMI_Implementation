@@ -1,10 +1,18 @@
+package sca;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 
 public class Turma implements Serializable{
     private String codigo;
-    private List<Aluno> alunos; 
+    private List<Aluno> alunos;
+
+    // Construtor vazio: necessário para o JAX-WS/JAXB conseguir remontar
+    // objetos Turma a partir do XML recebido pelo WebService.
+    public Turma() {
+        this.alunos = new ArrayList<>();
+    }
 
     public Turma(String codigo) {
         this.codigo = codigo;
@@ -31,6 +39,10 @@ public class Turma implements Serializable{
         return alunos;
     }
 
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -45,4 +57,3 @@ public class Turma implements Serializable{
         return sb.toString();
     }
 }
-

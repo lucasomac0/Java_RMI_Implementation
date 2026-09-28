@@ -3,6 +3,7 @@ JAVAC = javac
 JAVA = java
 SRC_DIR = src
 BIN_DIR = bin
+PKG = sca
 
 # Encontra todos os arquivos .java soltos dentro da pasta src
 SOURCES = $(wildcard $(SRC_DIR)/*.java)
@@ -18,16 +19,24 @@ compile:
 
 # Regras para rodar cada parte do sistema (já chamam o compile automaticamente)
 run-aluno: compile
-	$(JAVA) -cp $(BIN_DIR) RunAluno
+	$(JAVA) -cp $(BIN_DIR) $(PKG).RunAluno
 
 run-turma: compile
-	$(JAVA) -cp $(BIN_DIR) RunTurma
+	$(JAVA) -cp $(BIN_DIR) $(PKG).RunTurma
 
 run-secretaria: compile
-	$(JAVA) -cp $(BIN_DIR) RunSecretaria
+	$(JAVA) -cp $(BIN_DIR) $(PKG).RunSecretaria
 
 run-cliente: compile
-	$(JAVA) -cp $(BIN_DIR) ClienteMain
+	$(JAVA) -cp $(BIN_DIR) $(PKG).ClienteMain
+
+# WSSCA: publica o endpoint SOAP (Exportador WS + Cliente RMI)
+run-wsca: compile
+	$(JAVA) -cp $(BIN_DIR) $(PKG).WSServerPublisher
+
+# Cliente externo: só fala com o WSSCA, nunca com RMI diretamente
+run-cliente-externo: compile
+	$(JAVA) -cp $(BIN_DIR) $(PKG).ClienteExternoSCA
 
 # Comando mágico para limpar a sujeira
 clean:
