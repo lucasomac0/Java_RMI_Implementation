@@ -1,7 +1,7 @@
 # Variáveis
 JAVAC = javac
 JAVA = java
-SRC_DIR = src
+SRC_DIR = sca
 BIN_DIR = bin
 PKG = sca
 
@@ -32,11 +32,11 @@ run-cliente: compile
 
 # WSSCA: publica o endpoint SOAP (Exportador WS + Cliente RMI)
 run-wsca: compile
-	$(JAVA) -cp $(BIN_DIR) $(PKG).WSServerPublisher
+	$(JAVA) -cp $(BIN_DIR) $(PKG).WSSCAServerPublisher
 
 # Cliente externo: só fala com o WSSCA, nunca com RMI diretamente
 run-cliente-externo: compile
-	$(JAVA) -cp $(BIN_DIR) $(PKG).ClienteExternoSCA
+	$(JAVA) -cp $(BIN_DIR) $(PKG).WSSCAClient
 
 # Comando mágico para limpar a sujeira
 clean:
