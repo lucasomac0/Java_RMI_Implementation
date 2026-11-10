@@ -1,22 +1,16 @@
 package sca;
 
-import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
-
-// java -cp bin sigaa.RunSecretaria 192.168.0.10 192.168.0.15
+import java.rmi.registry.Registry;
 
 public class RunSecretaria {
-    public static void main(String[] args) {
-        // Pega os IPs dos argumentos ou usa localhost como padrão
-        String ipAluno = (args.length > 0) ? args[0] : "localhost";
-        String ipTurma = (args.length > 1) ? args[1] : "localhost";
-
-        try {
-            LocateRegistry.createRegistry(1101);
-            Naming.rebind("rmi://localhost:1101/SecretariaService", new SecretariaServiceImpl(ipAluno, ipTurma));
-            System.out.println("Servidor da SECRETARIA rodando na porta 1101...");
-            System.out.println("-> Apontando para Aluno em: " + ipAluno);
-            System.out.println("-> Apontando para Turma em: " + ipTurma);
-        } catch (Exception e) { e.printStackTrace(); }
+    public static void main(String[] args) throws Exception {
+        Rede.configurar();
+        String ipAluno = args.length > 0 ? args[0] : Rede.destinoPadrao();
+        String ipTurma = args.length > 1 ? args[1] : ipAluno;
+        int porta = Portas.secretaria();
+        Registry registry = LocateRegistry.createRegistry(porta, null, Rede.SSF);
+        registry.rebind("SecretariaService", new SecretariaServiceImpl(ipAluno, ipTurma));
+        System.out.println("[RunSecretaria] SecretariaService em " + Rede.HOST + ":" + porta);
     }
 }

@@ -1,16 +1,14 @@
 package sca;
 
-import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class RunTurma {
-    public static void main(String[] args) {
-        try {
-            LocateRegistry.createRegistry(1100);
-            Naming.rebind("rmi://localhost:1100/TurmaService", new TurmaServiceImpl());
-            System.out.println("Servidor de TURMAS rodando na porta 1100...");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        Rede.configurar();
+        int porta = Portas.turma();
+        Registry registry = LocateRegistry.createRegistry(porta, null, Rede.SSF);
+        registry.rebind("TurmaService", new TurmaServiceImpl());
+        System.out.println("[RunTurma] TurmaService em " + Rede.HOST + ":" + porta);
     }
 }

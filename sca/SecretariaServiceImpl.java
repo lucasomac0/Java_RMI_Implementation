@@ -10,17 +10,17 @@ public class SecretariaServiceImpl extends UnicastRemoteObject implements Secret
     private String ipTurma;
 
     public SecretariaServiceImpl(String ipAluno, String ipTurma) throws RemoteException {
-        super();
+        super(0, null, Rede.SSF);
         this.ipAluno = ipAluno;
         this.ipTurma = ipTurma;
     }
 
     private AlunoService getAlunoService() throws Exception {
-        return (AlunoService) Naming.lookup("rmi://" + ipAluno + ":1099/AlunoService");
+        return (AlunoService) Naming.lookup("rmi://" + ipAluno + ":" + Portas.aluno() + "/AlunoService");
     }
 
     private TurmaService getTurmaService() throws Exception {
-        return (TurmaService) Naming.lookup("rmi://" + ipTurma + ":1100/TurmaService");
+        return (TurmaService) Naming.lookup("rmi://" + ipTurma + ":" + Portas.turma() + "/TurmaService");
     }
 
     @Override

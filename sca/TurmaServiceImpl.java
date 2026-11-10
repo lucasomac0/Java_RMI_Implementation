@@ -16,7 +16,7 @@ public class TurmaServiceImpl extends UnicastRemoteObject implements TurmaServic
     private final String ARQUIVO_CSV = "turmas.csv";
 
     public TurmaServiceImpl() throws RemoteException {
-        super();
+        super(0, null, Rede.SSF);
         this.bdTurmas = new ArrayList<>();
         carregarDoCSV();
     }

@@ -10,18 +10,17 @@ import javax.xml.ws.Endpoint;
 public class WSSCAServerPublisher {
 
 	public static void main(String[] args) throws Exception {
-		String ipAluno = args.length > 0 ? args[0] : "localhost";
+		String padrao = Rede.destinoPadrao();
+		String ipAluno = args.length > 0 ? args[0] : padrao;
 		String ipTurma = args.length > 1 ? args[1] : ipAluno;
 		String ipSecretaria = args.length > 2 ? args[2] : ipAluno;
 
-		// Timeouts nas conexões RMI do gateway: serviço fora do ar ou travado
-		// vira erro em poucos segundos em vez de bloquear o cliente para sempre.
 		RMISocketFactory.setSocketFactory(new RMISocketFactory() {
 			@Override
 			public Socket createSocket(String host, int port) throws IOException {
 				Socket s = new Socket();
-				s.connect(new InetSocketAddress(host, port), 3000); // conexão: 3 s
-				s.setSoTimeout(10000);                              // resposta: 10 s
+				s.connect(new InetSocketAddress(host, port), 3000);
+				s.setSoTimeout(10000);
 				return s;
 			}
 
@@ -31,11 +30,14 @@ public class WSSCAServerPublisher {
 			}
 		});
 
-		Endpoint.publish("http://0.0.0.0:9876/WSSCA",
+		String host = System.getProperty("ws.host", Rede.HOST);
+		String porta = System.getProperty("ws.porta", "9876");
+
+		Endpoint.publish("http://" + host + ":" + porta + "/WSSCA",
 				new WSSCAServerImpl(ipAluno, ipTurma, ipSecretaria));
 
-		System.out.println("[WSSCA] Publicado em http://0.0.0.0:9876/WSSCA (WSDL em ?wsdl)");
-		System.out.println("[WSSCA] RMI: aluno=" + ipAluno + ":1099, turma=" + ipTurma
-				+ ":1100, secretaria=" + ipSecretaria + ":1101");
+		System.out.println("[WSSCA] Publicado em http://" + host + ":" + porta + "/WSSCA (WSDL em ?wsdl)");
+		System.out.println("[WSSCA] RMI: aluno=" + ipAluno + ", turma=" + ipTurma
+				+ ", secretaria=" + ipSecretaria);
 	}
 }

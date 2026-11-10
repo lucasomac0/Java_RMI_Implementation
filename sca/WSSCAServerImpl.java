@@ -31,15 +31,15 @@ public class WSSCAServerImpl implements WSSCAServer {
 	// ---------- acesso ao RMI (lookup a cada chamada) ----------
 
 	private AlunoService alunos() throws Exception {
-		return (AlunoService) Naming.lookup("rmi://" + ipAluno + ":1099/AlunoService");
+		return (AlunoService) Naming.lookup("rmi://" + ipAluno + ":" + Portas.aluno() + "/AlunoService");
 	}
 
 	private TurmaService turmas() throws Exception {
-		return (TurmaService) Naming.lookup("rmi://" + ipTurma + ":1100/TurmaService");
+		return (TurmaService) Naming.lookup("rmi://" + ipTurma + ":" + Portas.turma() + "/TurmaService");
 	}
 
 	private SecretariaService secretaria() throws Exception {
-		return (SecretariaService) Naming.lookup("rmi://" + ipSecretaria + ":1101/SecretariaService");
+		return (SecretariaService) Naming.lookup("rmi://" + ipSecretaria + ":" + Portas.secretaria() + "/SecretariaService");
 	}
 
 	private <T> T obter(Chamada<T> c) {

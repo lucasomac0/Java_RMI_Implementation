@@ -16,7 +16,7 @@ public class AlunoServiceImpl extends UnicastRemoteObject implements AlunoServic
     private final String ARQUIVO_CSV = "alunos.csv";
 
     public AlunoServiceImpl() throws RemoteException {
-        super();
+        super(0, null, Rede.SSF);
         this.bdAlunos = new ArrayList<>();
         carregarDoCSV();
     }

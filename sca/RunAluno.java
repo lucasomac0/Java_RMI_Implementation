@@ -1,17 +1,14 @@
 package sca;
 
-import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class RunAluno {
-    public static void main(String[] args) {
-        try {
-            // Cria o servidor na porta 1099
-            LocateRegistry.createRegistry(1099);
-            Naming.rebind("rmi://localhost:1099/AlunoService", new AlunoServiceImpl());
-            System.out.println("Servidor de ALUNOS rodando na porta 1099...");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws Exception {
+        Rede.configurar();
+        int porta = Portas.aluno();
+        Registry registry = LocateRegistry.createRegistry(porta, null, Rede.SSF);
+        registry.rebind("AlunoService", new AlunoServiceImpl());
+        System.out.println("[RunAluno] AlunoService em " + Rede.HOST + ":" + porta);
     }
 }
